@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+ <!-- =====================================
+ CONFIGURACIÓN GENERAL DEL DOCUMENTO
+ ====================================== -->
+ <!-- Define la codificación de caracteres utilizada por la página -->
+ <meta charset="UTF-8">
+ <!-- Permite que la interfaz se adapte correctamente a dispositivos móviles -->
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <!-- Título mostrado en la pestaña del navegador -->
+ <title>Banco Digital | Sistema de Gestión Bancaria</title>
+ <!-- Hoja de estilos principal del proyecto -->
+ <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body class="auth-page">
+ <!-- =====================================
+ ENCABEZADO
+ ====================================== -->
+ <!-- Presentación principal del Sistema de Gestión Bancaria -->
+ <header class="auth-header">
+ <!-- Nombre de la aplicación -->
+ <h1>Banco Digital</h1>
+ <!-- Descripción de la aplicación -->
+ <p>Sistema de Gestión Bancaria</p>
+ <!-- Identificación del proyecto dentro del taller -->
+ <span>Proyecto Integrador — Módulo 4</span>
+ </header>
+ <!-- =====================================
+  AUTENTICACIÓN
+ ====================================== -->
+ <!--
+ Contenedor principal de autenticación.
+ Dentro tendremos el formulario para iniciar sesión
+ y el formulario para registrar nuevos usuarios.
+ -->
+ <main class="auth-container">
+ <!-- =====================================
+ INICIO DE SESIÓN
+ ====================================== -->
+ <section class="auth-card">
+ <h2>Iniciar sesión</h2>
+ <!--
+ Formulario utilizado para iniciar sesión.
+ El id formLogin será utilizado posteriormente
+ desde JavaScript para escuchar el evento submit.
+ -->
+ <form id="formLogin" novalidate>
+ <!-- Campo para ingresar el correo electrónico -->
+ <div class="form-group">
+ <label for="loginEmail">
+ Correo electrónico
+ </label>
+ <input
+ id="loginEmail"
+type="email"
+placeholder="correo@ejemplo.com"
+ >
+ </div>
+ <!-- Campo para ingresar la contraseña -->
+ <div class="form-group">
+ <label for="loginPassword">
+ Contraseña
+ </label>
+ <input
+ id="loginPassword"
+type="password"
+placeholder="Tu contraseña">
+</div>
+ <!-- Botón que envía el formulario de inicio de sesión -->
+ <button
+ type="submit"
+class="btn btn-primary"
+ >
+ Iniciar sesión
+ </button>
+ </form>
+ </section>
+ <!-- =====================================
+ REGISTRO DE USUARIO
+ ====================================== -->
+ <section class="auth-card">
+ <h2>Crear cuenta</h2>
+ <!--
+ Formulario utilizado para registrar un nuevo usuario.
+ JavaScript utilizará el id formRegistro para obtener
+ los datos y procesar el registro.
+ -->
+ <form id="formRegistro" novalidate>
+ <!-- Campo para capturar el nombre completo -->
+ <div class="form-group">
+ <label for="registroNombre">
+ Nombre completo
+ </label>
+ <input
+ id="registroNombre"
+type="text"
+placeholder="Juan Suarez"
+ >
+ </div>
+ <!-- Campo para capturar el correo electrónico -->
+ <div class="form-group">
+ <label for="registroEmail">
+ Correo electrónico
+ </label>
+ <input
+ id="registroEmail"
+type="email"
+placeholder="correo@ejemplo.com"
+ >
+ </div>
+ <!-- Campo para capturar el número telefónico -->
+ <div class="form-group">
+ <label for="registroTelefono">
+ Teléfono
+ </label>
+ <input
+ id="registroTelefono"
+type="tel"
+placeholder="5512345678"
+ >
+ </div>
+ <!-- Campo para crear la contraseña -->
+ <div class="form-group">
+ <label for="registroPassword">
+ Contraseña
+ </label>
+ <input
+ id="registroPassword"
+type="password"
+placeholder="Mínimo 6 caracteres"
+ >
+ </div>
+
+ <!-- Botón que envía el formulario de registro -->
+ <button
+ type="submit"
+class="btn btn-primary"
+ >
+ Registrarme
+ </button>
+ </form>
+ </section>
+ </main>
+ <!-- =====================================
+ LIBRERÍAS Y MÓDULO PRINCIPAL
+ ====================================== -->
+ <!--
+ Carga SweetAlert2.
+ Esta librería será utilizada para mostrar alertas,
+ errores, confirmaciones y mensajes al usuario.
+ -->
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+ <!--
+ Carga el archivo JavaScript principal de la página.
+ type="module" permite utilizar ES Modules,
+ incluyendo import y export.
+ -->
+ <script type="module" src="./js/main.js"></script>
+</body>
+</html>

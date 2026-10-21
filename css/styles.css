@@ -1,0 +1,510 @@
+/* =========================================
+ RESET Y ESTILOS GENERALES
+========================================= */
+/*
+ Aplicamos box-sizing a todos los elementos para que
+ padding y border formen parte del tamaño total definido.
+ También eliminamos los márgenes y espacios internos
+ que los navegadores agregan por defecto.
+*/
+* {
+ box-sizing: border-box;
+ margin: 0;
+ padding: 0;
+}
+/*
+ Configuración general del cuerpo de todas las páginas.
+ Definimos la altura mínima, familia tipográfica,
+ color de fondo y color principal del texto.
+*/
+body {
+ min-height: 100vh;
+ font-family: Arial, Helvetica, sans-serif;
+ background-color: #f4f6f8;
+ color: #1f2937;
+}
+/* =========================================
+ AUTENTICACIÓN
+========================================= */
+/*
+ Contenedor principal de la página de autenticación.
+ Se utiliza principalmente en index.html.
+*/
+.auth-page {
+ min-height: 100vh;
+ padding: 48px 24px;
+}
+/*
+ Encabezado de la página de inicio de sesión
+ y registro de usuarios.
+*/
+.auth-header {
+ max-width: 900px;
+ margin: 0 auto 32px;
+ text-align: center;
+}
+/* Título principal del sistema bancario */
+.auth-header h1 {
+ margin-bottom: 12px;
+ font-size: 2rem;
+}
+/*
+ Aplicamos el mismo color secundario al texto
+ descriptivo y al texto del módulo.
+*/
+.auth-header p,
+.auth-header span {
+ color: #6b7280;
+}
+/* Separación inferior de la descripción */
+.auth-header p {
+ margin-bottom: 8px;
+}
+/* Tamaño del texto secundario */
+.auth-header span {
+ font-size: 0.9rem;
+}
+/*
+ Contenedor que organiza las tarjetas de
+ inicio de sesión y registro.
+ Utilizamos Grid para mostrar inicialmente
+ dos columnas.
+*/
+.auth-container {
+ width: min(900px, 100%);
+ margin: 0 auto;
+ display: grid;
+ grid-template-columns: repeat(2, minmax(0, 1fr));
+ gap: 24px;
+}
+/*
+ Tarjetas utilizadas para contener cada formulario
+ de autenticación.
+*/
+.auth-card {
+ padding: 28px;
+ background-color: #ffffff;
+ border-radius: 12px;
+ box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+ }
+/* Separación del título respecto al formulario */
+.auth-card h2 {
+ margin-bottom: 24px;
+}
+/* =========================================
+ FORMULARIOS
+========================================= */
+/*
+ Grupo que contiene normalmente:
+ label + input/select + posibles mensajes.
+*/
+.form-group {
+ margin-bottom: 18px;
+}
+/* Etiquetas de los campos de formulario */
+.form-group label {
+ display: block;
+ margin-bottom: 8px;
+ font-weight: 600;
+}
+/*
+ Estilos compartidos por los campos input
+ y los elementos select.
+*/
+.form-group input,
+.form-group select {
+ width: 100%;
+ padding: 12px 14px;
+ border: 1px solid #d1d5db;
+ border-radius: 8px;
+ background-color: #ffffff;
+ font-size: 1rem;
+}
+/*
+ Indicador visual cuando el usuario selecciona
+ un campo del formulario.
+*/
+.form-group input:focus,
+.form-group select:focus {
+ outline: 2px solid #2563eb;
+ border-color: transparent;
+}
+/* =========================================
+ BOTONES
+========================================= */
+/*
+ Clase base utilizada por los diferentes botones
+ de la aplicación.
+*/
+.btn {
+ display: inline-flex;
+ align-items: center;
+ justify-content: center;
+ min-height: 44px;
+ padding: 10px 18px;
+ border: none;
+ border-radius: 8px;
+ cursor: pointer;
+ font-size: 1rem;
+ font-weight: 600;
+}
+/* Botón utilizado para acciones principales */
+.btn-primary {
+ background-color: #2563eb;
+ color: #ffffff;
+}
+/* Cambio visual al colocar el cursor sobre el botón principal */
+.btn-primary:hover {
+ background-color: #1d4ed8;
+}
+/* Botón utilizado para acciones secundarias */
+.btn-secondary {
+ background-color: #111827;
+ color: #ffffff;
+}
+/* Estado hover del botón secundario */
+.btn-secondary:hover {
+ background-color: #374151;
+}
+/*
+ Botón utilizado para acciones que requieren
+ especial atención, como eliminar una cuenta.
+*/
+.btn-danger {
+ background-color: #dc2626;
+ color: #ffffff;
+}
+/* Estado hover del botón de peligro */
+.btn-danger:hover {
+ background-color: #b91c1c;
+}
+/* =========================================
+ CABECERA Y NAVEGACIÓN
+========================================= */
+/*
+ Cabecera utilizada por las páginas internas
+ del sistema bancario.
+*/
+.topbar {
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ gap: 24px;
+ padding: 20px clamp(20px, 5vw, 72px);
+ background-color: #ffffff;
+ border-bottom: 1px solid #e5e7eb;
+}
+/* Título principal de la cabecera */
+.topbar h1 {
+ margin-bottom: 4px;
+ font-size: 1.5rem;
+}
+/* Descripción secundaria de la cabecera */
+.topbar p {
+ color: #6b7280;
+}
+/*
+ Barra de navegación utilizada para cambiar
+ entre Dashboard, Mi cuenta, Movimientos
+ y Transferencias.
+*/
+.dashboard-nav {
+ display: flex;
+ gap: 12px;
+ padding: 14px clamp(20px, 5vw, 72px);
+ overflow-x: auto;
+ background-color: #ffffff;
+ border-bottom: 1px solid #e5e7eb;
+}
+/* Enlaces del menú de navegación */
+.dashboard-nav a {
+ padding: 9px 14px;
+ color: #374151;
+ text-decoration: none;
+ border-radius: 8px;
+ white-space: nowrap;
+}
+/*
+ Resaltamos tanto el enlace sobre el que se encuentra
+ el cursor como la página actualmente selecciona
+ */
+.dashboard-nav a:hover,
+.dashboard-nav a.active {
+ background-color: #eff6ff;
+ color: #1d4ed8;
+}
+/* =========================================
+ DASHBOARD
+========================================= */
+/*
+ Configuración general utilizada por las páginas
+ Dashboard y Mi Cuenta.
+*/
+.app-dashboard,
+.app-cuenta {
+ min-height: 100vh;
+ background-color: #f4f6f8;
+}
+/*
+ Contenedor donde JavaScript genera dinámicamente
+ el contenido principal del Dashboard.
+*/
+.dashboard-content {
+ width: min(1100px, 92%);
+ margin: 32px auto;
+ display: grid;
+ gap: 24px;
+}
+/*
+ Tarjeta de bienvenida y secciones generales
+ del Dashboard.
+*/
+.dashboard-welcome,
+.dashboard-section {
+ padding: 28px;
+ background-color: #ffffff;
+ border-radius: 14px;
+ box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+/* Etiqueta informativa utilizada en el Dashboard */
+.dashboard-label {
+ margin-bottom: 6px;
+ color: #2563eb;
+ font-weight: 700;
+}
+/* Nombre o saludo principal del usuario */
+.dashboard-welcome h2 {
+ margin-bottom: 8px;
+ font-size: 1.8rem;
+}
+/*
+ Textos secundarios utilizados dentro
+ de las diferentes secciones.
+*/
+.dashboard-welcome p,
+.section-header span {
+ color: #6b7280;
+}
+/*
+ Grid utilizado para organizar las tarjetas
+ de resumen y los datos de la cuenta.
+*/
+.summary-grid,
+.account-card {
+ display: grid;
+ grid-template-columns: repeat(3, minmax(0, 1fr));
+ gap: 18px;
+}
+/* Tarjetas que muestran información resumida */
+.summary-card {
+ display: flex;
+ flex-direction: column;
+ gap: 12px;
+ padding: 24px;
+ background-color: #ffffff;
+ border-radius: 12px;
+ box-shadow: 0 8px 24px rgba(0,0,00.05);
+}
+/*
+ Texto descriptivo dentro de las tarjetas
+ de resumen y datos de cuenta.
+*/
+.summary-card span,
+.account-card span {
+ color: #6b7280;
+ font-size: 0.9rem;
+}
+/* Valor principal mostrado en las tarjetas */
+.summary-card strong {
+ font-size: 1.6rem;
+}
+/* Separación del encabezado de cada sección */
+.section-header {
+ margin-bottom: 22px;
+}
+/*
+Organizamos las etiquetas informativas
+ como elementos de bloque.
+*/
+.section-header span,
+.account-card span {
+ display: block;
+ margin-bottom: 8px;
+}
+/*
+ Cada dato individual de la cuenta se presenta
+ dentro de su propio bloque visual.
+*/
+.account-card div {
+ padding: 18px;
+ background-color: #f9fafb;
+ border: 1px solid #e5e7eb;
+ border-radius: 10px;
+}
+/* =========================================
+ MI CUENTA
+========================================= */
+/*
+ Contenedor principal de la página Mi Cuenta.
+*/
+.cuenta-content {
+ width: min(1100px, 92%);
+ margin: 32px auto;
+}
+/*
+ Distribución principal de la página.
+ La información general se presenta en una columna
+ y los formularios de administración en otra.
+*/
+.cuenta-layout {
+ display: grid;
+ grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1.4fr);
+ gap: 24px;
+ align-items: start;
+}
+/*
+ Tarjetas principales utilizadas en la
+ administración de la cuenta.
+*/
+.cuenta-card,
+.cuenta-section {
+ padding: 28px;
+ background-color: #ffffff;
+ border-radius: 14px;
+ box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+/*
+ Encabezado de la tarjeta que contiene
+ la información principal del usuario.
+*/
+.cuenta-card-header {
+ display: flex;
+ justify-content: space-between;
+ gap: 16px;
+ margin-bottom: 24px;
+}
+/* Información secundaria de la cuenta */
+.cuenta-meta {
+ color: #6b7280;
+}
+/*
+ Contenedor de los diferentes datos
+ correspondientes al usuario.
+*/
+.cuenta-detalle {
+ display: grid;
+ gap: 14px;
+}
+/*
+ Cada dato se separa visualmente mediante
+ una línea inferior.
+*/
+.cuenta-detalle p {
+ padding-bottom: 14px;
+ border-bottom: 1px solid #e5e7eb;
+}
+/*
+ El último dato no necesita una línea
+ de separación inferior.
+*/
+.cuenta-detalle p:last-child {
+ padding-bottom: 0;
+ border-bottom: none;
+}
+/* =========================================
+ INDICADORES DE ESTADO
+========================================= */
+/*
+ Clase base para pequeños indicadores visuales
+ utilizados para representar estados.
+*/
+.badge {
+ display: inline-flex;
+ padding: 6px 10px;
+ border-radius: 999px;
+ font-size: 0.8rem;
+ font-weight: 700;
+}
+/* Indicador utilizado para estados positivos */
+.badge-success {
+ background-color: #dcfce7;
+ color: #166534;
+}
+/* Indicador utilizado para estados negativos */
+.badge-danger {
+ background-color: #fee2e2;
+ color: #991b1b;
+}
+/* =========================================
+ PANEL DE ADMINISTRACIÓN DE CUENTA
+========================================= */
+/*
+ Organiza verticalmente las diferentes secciones
+ utilizadas para administrar el perfil.
+*/
+.cuenta-panel {
+ display: grid;
+ gap: 24px;
+}
+/* Títulos de las secciones de Mi Cuenta */
+.cuenta-section h3 {
+ margin-bottom: 22px;
+}
+/*
+ Espacio reservado para mostrar errores
+ de validación debajo de los campos.
+*/
+.field-error {
+ min-height: 18px;
+ margin-top: 6px;
+ color: #dc2626;
+ font-size: 0.85rem;
+}
+/* =========================================
+ ZONA DE PELIGRO
+========================================= */
+/*
+ Diferenciamos visualmente las operaciones
+ sensibles, como eliminar la cuenta.
+*/
+.cuenta-section-danger {
+ border: 1px solid #fecaca;
+}
+/* Colores utilizados en títulos y advertencias */
+.cuenta-section-danger h3,
+.cuenta-warning {
+ color: #7f1d1d;
+}
+/* Separación de los mensajes de advertencia */
+.cuenta-warning {
+ margin-bottom: 18px;
+}
+/* =========================================
+ RESPONSIVE GENERAL
+========================================= */
+/*
+ Cuando el ancho de pantalla es menor o igual
+ a 768px convertimos las distribuciones principales
+ en una sola columna.
+*/
+@media (max-width: 768px) {
+ .auth-container,
+ .summary-grid,
+ .account-card,
+ .cuenta-layout {
+ grid-template-columns: 1fr;
+ }
+ /* Reducimos el espacio exterior de autenticación */
+ .auth-page {
+ padding: 32px 16px;
+ }
+ /*
+ La cabecera y encabezados de tarjetas pasan
+ de una distribución horizontal a vertical.
+ */
+ .topbar,
+ .cuenta-card-header {
+ align-items: flex-start;
+ flex-direction: column;
+ }
+}
