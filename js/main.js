@@ -3,7 +3,7 @@ PUNTO DE ENTRADA DE LA APLICACIÓN
 Mostramos en la consola un mensaje que nos permite comprobar que main.js se
 está cargando correctamente desde nuestro index.html
 ========================================= */
-console.log('Sistema de Gestión Bancaria - v0.2.0');
+console.log('Sistema de Gestión Bancaria - v0.3.0');
 
 /* =========================================
 IMPORTAR VALIDADORES, HELPERS Y FORMATEADORES
@@ -57,4 +57,67 @@ formatDate(new Date()),
 console.log(
 'Número de cuenta:',
 formatAccountNumber('123456789012'),
+);
+
+// importar modelo Ususario, cuenta y movimiento
+import { Usuario } from './models/Usuario.js';  
+import {Cuenta} from './models/Cuenta.js';
+import { Movimiento } from './models/Movimiento.js';
+
+//Usuario 
+//creacionde nuestra primera instancia de la clase usuario
+const usuarioDemo = new Usuario ({
+    nombre: 'Ana Martinez',
+    email: 'analaura@gmail.com',
+    telefono: '5545075455',
+    password: '1234566',
+});
+
+console.log('Usuario:', usuarioDemo);
+
+/* ==========================================
+CUENTA
+Creamos una cuenta y la asociamos al usuario utilizando su ID
+========================================== */
+const cuentaDemo = new Cuenta({
+numeroCuenta: '123456789012',
+usuarioId: usuarioDemo.id,
+});
+
+// Mostramos la cuenta creada
+console.log(
+'Cuenta:',
+cuentaDemo,
+);
+
+/* ==========================================
+DEPÓSITO DE DEMOSTRACIÓN
+Utilizamos el método depositar() de nuestra instancia de Cuenta.
+========================================== */
+cuentaDemo.depositar(1000);
+
+/* Mostramos el nuevo saldo utilizando formatCurrency() desarrollado en
+v0.2.0. */
+console.log(
+'Saldo después del depósito:',
+formatCurrency(cuentaDemo.saldo),
+);
+
+/* ==========================================
+MOVIMIENTO
+Representamos manualmente el depósito mediante una instancia de Movimiento
+========================================== */
+const movimientoDemo = new Movimiento({
+tipo: 'DEPOSITO',
+monto: 1000,
+descripcion: 'Depósito inicial',
+/* Asociamos el movimiento con la cuenta creada. */
+cuentaOrigen: cuentaDemo.id,
+saldoResultante: cuentaDemo.saldo,
+});
+
+// Mostramos el movimiento creado
+console.log(
+'Movimiento:',
+movimientoDemo,
 );
