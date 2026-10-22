@@ -1,9 +1,3 @@
-/*========================
-PUNTO DE ENTRADA DE LA APLICACIÓN
-Mostramos en la consola un mensaje que nos permite comprobar que main.js se está cargando
-correctamente desde nuestro index.html
-========================*/
-
 /* ========================================= 
 IMPORTAR VALIDADORES, HELPERS Y FORMATEADORES
 ========================================= */
@@ -20,16 +14,98 @@ import {
   formatAccountNumber,
 } from "./utils/formatters.js";
 
+//Importamos las clases que representan las principales entidades del sistema.
 import { Usuario } from "./models/Usuario.js";
 import { Cuenta } from "./models/Cuenta.js";
+import { Movimiento } from "./models/Movimiento.js";
 import { Banco } from "./models/Banco.js";
 
 /* ========================================= 
-	PUNTO DE ENTRADA DE LA APLICACIÓN 
+		IMPORTAR SERVICIO DE PERSISTENCIA
+STORAGE_KEYS: contiene las claves oficiales. 
+storageService: permite guardar y recuperar los datos.
+========================================= */
+import { STORAGE_KEYS, storageService } from "./services/StorageService.js";
+
+//window representa el objeto global de la página web en el navegador.
+//window.storageService = storageService;
+
+//Mensaje que muestra en pantalla la version que se esta ejecutando
+console.log("Sistema de Gestión Bancaria - v0.5.0");
+
+/* ========================================= 
+		GUARDAR ESTADO DEL BANCO
+Recibe una instancia de Banco y persiste sus tres colecciones.
 ========================================= */
 
-// Mostramos la versión actual del proyecto
-console.log("Sistema de Gestión Bancaria - v0.4.0");
+/*Utiliza storageService para almacenar usuarios, 
+cuentas y movimientos dentro de LocalStorage.*/
+
+function guardarBanco(banco) {
+  /* ===================================== 
+			GUARDAR USUARIOS 
+	===================================== */
+  //Internamente, guardar() utiliza JSON.stringify() y localStorage.setItem().
+  storageService.guardar(STORAGE_KEYS.USUARIOS, banco.usuarios);
+
+  /* ===================================== 
+		    GUARDAR CUENTAS 
+	===================================== */
+  storageService.guardar(STORAGE_KEYS.CUENTAS, banco.cuentas);
+
+  /* ===================================== 
+			GUARDAR MOVIMIENTOS 
+	===================================== */
+  storageService.guardar(STORAGE_KEYS.MOVIMIENTOS, banco.movimientos);
+}
+
+/* ========================================= 
+			CARGAR BANCO
+Recupera la información persistida, reconstruye cada instancia y finalmente crea nuevamente el Banco.
+========================================= */
+
+function cargarBanco() {
+  // RECUPERAR USUARIOS
+  /*Declara una variable llamada usuariosGuardados, que almacenará el resultado de la recuperación.
+  storageService es la instancia que importamos desde StorageService.js
+  Esta instancia contiene los métodos guardar(), obtener(), eliminar() y limpiar() */
+
+  const usuariosGuardados = storageService.obtener(STORAGE_KEYS.USUARIOS, []);
+
+  // RECUPERAR CUENTAS
+  const cuentasGuardadas = storageService.obtener(STORAGE_KEYS.CUENTAS, []);
+
+  // RECUPERAR MOVIMIENTOS
+  const movimientosGuardados = storageService.obtener(
+    STORAGE_KEYS.MOVIMIENTOS,
+    [],
+  );
+
+  // RECONSTRUIR USUARIOS
+  // map() recorre cada elemento y crea una nueva instancia de Usuario.
+  const usuarios = usuariosGuardados.map((usuario) => new Usuario(usuario));
+
+  // RECONSTRUIR CUENTAS
+  // Reconstruimos Cuenta para recuperar también sus métodos
+  const cuentas = cuentasGuardadas.map((cuenta) => new Cuenta(cuenta));
+
+  // RECONSTRUIR MOVIMIENTOS
+  const movimientos = movimientosGuardados.map(
+    (movimiento) => new Movimiento(movimiento),
+  );
+
+  // CREAR NUEVAMENTE EL BANCO
+  // Utilizamos las colecciones reconstruidas como estado inicial del Banco
+  return new Banco({
+    usuarios,
+    cuentas,
+    movimientos,
+  });
+}
+
+/* ========================================= 
+	PRUEBAS DE UTILIDADES
+========================================= */
 
 // Validación de campo debe mostrar true
 console.log("Campo obligatorio:", validarCampoObligatorio("Banco Digital"));
@@ -49,91 +125,83 @@ console.log("Fecha formateada:", formatDate(new Date()));
 // Separamos visualmente cada cuatro dígitos
 console.log("Número de cuenta:", formatAccountNumber("123456789012"));
 
-// ==========================================
-// BANCO
-// ==========================================
+//=============================================
+//CARGAR BANCO PERSISTIDO
+//CargarBanco() primero busca información guardada antes de crear la instancia.
+//=============================================
 
-const bancoDemo = new Banco();
-
-// ==========================================
-// USUARIO
-// ==========================================
-
-const usuarioDemo = new Usuario({
-  nombre: "Juan Suarez",
-  email: "juan@correo.com",
-  telefono: "5512345678",
-  password: "123456",
-});
-
-bancoDemo.agregarUsuario(usuarioDemo);
-
-console.log("Usuarios registrados:", bancoDemo.usuarios);
+const bancoDemo = cargarBanco();
 
 // ==========================================
-// CUENTA
+// DATOS INICIALES
+// VALIDAR SI EL BANCO ESTÁ VACÍO
 // ==========================================
 
-const cuentaDemo = new Cuenta({
-  numeroCuenta: "123456789012",
-  usuarioId: usuarioDemo.id,
-});
+if (bancoDemo.usuarios.length === 0) {
+  // CREAR USUARIO INICIAL DEMO
+  const usuarioDemo = new Usuario({
+    nombre: "Rosa Andrade",
+    email: "rosa123@correo.com",
+    telefono: "4666672453",
+    password: "123456",
+  });
 
-bancoDemo.agregarCuenta(cuentaDemo);
+  // REGISTRAR USUARIO
+  bancoDemo.agregarUsuario(usuarioDemo);
 
-console.log("Cuentas registradas:", bancoDemo.cuentas);
+  // CREAR CUENTA INICIAL DEMO
+  const cuentaDemo = new Cuenta({
+    numeroCuenta: "123456789012",
+    usuarioId: usuarioDemo.id,
+  });
 
-// ==========================================
-// DEPÓSITO
-// ==========================================
+  // REGISTRAR CUENTA
+  bancoDemo.agregarCuenta(cuentaDemo);
 
-const depositoDemo = bancoDemo.realizarDeposito({
-  cuentaId: cuentaDemo.id,
-  monto: 1000,
-  descripcion: "Depósito inicial",
-});
-
-console.log("Saldo actual:", formatCurrency(cuentaDemo.saldo));
-
-console.log("Movimiento generado:", depositoDemo);
-
-console.log("Movimientos registrados:", bancoDemo.movimientos);
-
-// ==========================================
-// BÚSQUEDAS
-// ==========================================
-
-const usuarioEncontrado = bancoDemo.buscarUsuarioPorId(usuarioDemo.id);
-
-console.log("Usuario encontrado:", usuarioEncontrado);
-
-const cuentasUsuario = bancoDemo.obtenerCuentasDeUsuario(usuarioDemo.id);
-
-console.log("Cuentas del usuario:", cuentasUsuario);
-
-// ==========================================
-// RELACIONES
-// ==========================================
-
-console.log(
-  "La cuenta pertenece al usuario:",
-  usuarioDemo.id === cuentaDemo.usuarioId,
-);
-
-console.log(
-  "El depósito pertenece a la cuenta:",
-  cuentaDemo.id === depositoDemo.cuentaOrigen,
-);
-
-// ==========================================
-// PRUEBA DE REGLA NEGATIVA
-// ==========================================
-
-try {
+  // REALIZAR DEPÓSITO INICIAL DEMO
   bancoDemo.realizarDeposito({
     cuentaId: cuentaDemo.id,
-    monto: -500,
+    monto: 1000,
+    descripcion: "Depósito inicial",
   });
-} catch (error) {
-  console.log("Error controlado:", error.message);
+
+  // GUARDAR BANCO DEMO
+  guardarBanco(bancoDemo);
+
+  console.log("Datos iniciales creados y guardados.");
+}
+
+// ==========================================
+// COMPROBAR DATOS RECUPERADOS
+// ==========================================
+
+console.log("Banco recuperado:", bancoDemo);
+
+console.log("Usuarios almacenados:", bancoDemo.usuarios);
+
+console.log("Cuentas almacenadas:", bancoDemo.cuentas);
+
+console.log("Movimientos almacenados:", bancoDemo.movimientos);
+
+// ==========================================
+// OBTENER PRIMERA CUENTA
+// ==========================================
+const cuentaPrincipal = bancoDemo.cuentas[0] || null;
+
+/* ========================================= 
+	SI EXISTE MOSTRAR SALDO PERSISTIDO 
+    comprueba que hay una cuenta disponible, muestra su saldo 
+    y verifica que la reconstrucción de las instancias realizada 
+    por cargarBanco() permite seguir utilizando 
+    los métodos definidos en la clase Cuenta
+========================================= */
+if (cuentaPrincipal) {
+  console.log("Saldo persistido:", formatCurrency(cuentaPrincipal.saldo));
+
+  console.log(
+    "¿La cuenta recuperada sigue siendo una instancia de Cuenta?",
+    cuentaPrincipal instanceof Cuenta,
+  );
+
+  console.log("Tipo de depositar:", typeof cuentaPrincipal.depositar);
 }
