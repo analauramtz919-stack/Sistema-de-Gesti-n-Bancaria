@@ -1,0 +1,579 @@
+/* =======================================================
+		Este archivo define los estilos visuales 
+        de manera general para este proyecto.
+        Estableciendo tamaños y centrando contenido.
+
+        #f4f6f8	- #f8f6fb
+        #6b7280	- #766f80
+        #d1d5db	- #d8d1df
+        #e5e7eb	- #e7e1ed
+        #f9fafb	- #fbf9fd
+        #2563eb	- #8064a2
+        #1d4ed8	- #6d538c
+        #eff6ff	- #f0eaf7
+        #374151	- #484052
+        #111827	- #30283d
+        #1f2937 - #30283d
+
+
+         Después, haría estos ajustes de formato:
+
+En styles.css, cerca de la línea 16, cambia la tipografía a:
+font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; 
+
+-En ese mismo archivo, dentro de body, agrega line-height: 1.5; debajo de font-family. Le da un poco más de aire al texto.
+-Para que tarjetas y paneles se vean más suaves, cambia border-radius: 12px a 16px y border-radius: 14px a 16px en las tarjetas principales. En botones y campos puedes dejar 8px.
+-En transferencia.css, la tarjeta de saldo usa el fondo lila suave tras el reemplazo de #eff6ff; así queda coordinada con los botones y los filtros.
+-En movimientos.css, los filtros activos y las filas seleccionadas usarán el mismo malva. Eso ayuda a que las páginas se sientan parte de una sola interfaz.
+-Yo empezaría solo con los reemplazos de color y revisaría cómo se ve; luego probaría los radios de las tarjetas.
+======================================================== */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  /*font-family: Arial, Helvetica, sans-serif;*/
+  line-height: 1.5;
+  background-color: #f8f6fb;
+
+  color: #282d3d;
+}
+
+/* =========================================
+   AUTENTICACIÓN
+========================================= */
+
+.auth-page {
+  min-height: 100vh;
+
+  padding: 48px 24px;
+}
+
+.auth-header {
+  max-width: 900px;
+
+  margin: 0 auto 32px;
+
+  text-align: center;
+}
+
+.auth-header h1 {
+  margin-bottom: 12px;
+
+  font-size: 2rem;
+}
+
+.auth-header p {
+  margin-bottom: 8px;
+
+  color: #e4e6ec;
+}
+
+.auth-header span {
+  font-size: 0.9rem;
+
+  color: #766f80;
+}
+
+.auth-container {
+  width: min(900px, 100%);
+
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 24px;
+}
+
+.auth-card {
+  padding: 28px;
+
+  background-color: #ffffff;
+
+  border-radius: 16px;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.auth-card h2 {
+  margin-bottom: 24px;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-weight: 600;
+}
+
+.form-group input {
+  width: 100%;
+
+  padding: 12px 14px;
+
+  border: 1px solid #bcc8eb;
+
+  border-radius: 8px;
+
+  font-size: 1rem;
+}
+
+.form-group input:focus {
+  outline: 2px solid #0a2fa9;
+
+  border-color: transparent;
+}
+
+.btn {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  min-height: 44px;
+
+  padding: 10px 18px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  font-size: 1rem;
+
+  font-weight: 600;
+}
+
+.btn-primary {
+  background-color: #5b7ca2;
+
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background-color: #5b7ca2;
+}
+
+.btn-secondary {
+  background-color: #172abd;
+
+  color: #ffffff;
+}
+
+.btn-secondary:hover {
+  background-color: #404252;
+}
+
+/* =========================================
+   DASHBOARD
+========================================= */
+
+.app-dashboard {
+  min-height: 100vh;
+
+  background-color: #f8f6fb;
+}
+
+.topbar {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 24px;
+
+  padding: 20px clamp(20px, 5vw, 72px);
+
+  background-color: #ffffff;
+
+  border-bottom: 1px solid #e7e1ed;
+}
+
+.topbar h1 {
+  margin-bottom: 4px;
+
+  font-size: 1.5rem;
+}
+
+.topbar p {
+  color: #766f80;
+}
+
+.dashboard-nav {
+  display: flex;
+
+  gap: 12px;
+
+  padding: 14px clamp(20px, 5vw, 72px);
+
+  overflow-x: auto;
+
+  background-color: #ffffff;
+
+  border-bottom: 1px solid #e7e1ed;
+}
+
+.dashboard-nav a {
+  padding: 9px 14px;
+
+  color: #484052;
+
+  text-decoration: none;
+
+  border-radius: 8px;
+}
+
+.dashboard-nav a:hover,
+.dashboard-nav a.active {
+  background-color: #f0eaf7;
+
+  color: #4449a6;
+}
+
+.dashboard-content {
+  width: min(1100px, 92%);
+
+  margin: 32px auto;
+
+  display: grid;
+
+  gap: 24px;
+}
+
+.dashboard-welcome {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 24px;
+
+  padding: 28px;
+
+  background-color: #ffffff;
+
+  border-radius: 16px;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.dashboard-label {
+  margin-bottom: 6px;
+
+  color: #6478a2;
+
+  font-weight: 700;
+}
+
+.dashboard-welcome h2 {
+  margin-bottom: 8px;
+
+  font-size: 1.8rem;
+}
+
+.dashboard-welcome p {
+  color: #6f7480;
+}
+
+.summary-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 18px;
+}
+
+.summary-card {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 12px;
+
+  padding: 24px;
+
+  background-color: #ffffff;
+
+  border-radius: 16px;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+
+.summary-card span {
+  color: #766f80;
+
+  font-size: 0.9rem;
+}
+
+.summary-card strong {
+  font-size: 1.6rem;
+
+  color: #30283d;
+}
+
+.dashboard-section {
+  padding: 28px;
+
+  background-color: #ffffff;
+
+  border-radius: 16px;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+
+.section-header {
+  margin-bottom: 22px;
+}
+
+.section-header span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #766f80;
+
+  font-size: 0.9rem;
+}
+
+.account-card {
+  display: grid;
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 18px;
+}
+
+.account-card div {
+  padding: 18px;
+
+  background-color: #fbf9fd;
+
+  border: 1px solid #e7e1ed;
+
+  border-radius: 10px;
+}
+
+.account-card span {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #6f7280;
+
+  font-size: 0.85rem;
+}
+
+.account-card strong {
+  font-size: 1.1rem;
+}
+
+/* =========================================
+   MI CUENTA
+========================================= */
+
+.app-cuenta {
+  min-height: 100vh;
+
+  background-color: #f8f6fb;
+}
+
+.cuenta-content {
+  width: min(1100px, 92%);
+
+  margin: 32px auto;
+}
+
+.cuenta-layout {
+  display: grid;
+
+  grid-template-columns:
+    minmax(280px, 0.8fr)
+    minmax(0, 1.4fr);
+
+  gap: 24px;
+
+  align-items: start;
+}
+
+.cuenta-card {
+  padding: 28px;
+
+  background-color: #ffffff;
+
+  border-radius: 16px;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+
+.cuenta-card-header {
+  display: flex;
+
+  align-items: flex-start;
+
+  justify-content: space-between;
+
+  gap: 16px;
+
+  margin-bottom: 24px;
+}
+
+.cuenta-card-header h2 {
+  margin-bottom: 5px;
+}
+
+.cuenta-meta {
+  color: #766f80;
+}
+
+.cuenta-detalle {
+  display: grid;
+
+  gap: 14px;
+}
+
+.cuenta-detalle p {
+  padding-bottom: 14px;
+
+  border-bottom: 1px solid #e7e1ed;
+}
+
+.cuenta-detalle p:last-child {
+  padding-bottom: 0;
+
+  border-bottom: none;
+}
+
+.badge {
+  display: inline-flex;
+
+  align-items: center;
+
+  padding: 6px 10px;
+
+  border-radius: 999px;
+
+  font-size: 0.8rem;
+
+  font-weight: 700;
+}
+
+.badge-success {
+  background-color: #dcfce7;
+
+  color: #166534;
+}
+
+.badge-danger {
+  background-color: #fee2e2;
+
+  color: #991b1b;
+}
+
+.cuenta-panel {
+  display: grid;
+
+  gap: 24px;
+}
+
+.cuenta-section {
+  padding: 28px;
+
+  background-color: #ffffff;
+
+  border-radius: 16px;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+
+.cuenta-section h3 {
+  margin-bottom: 22px;
+}
+
+.cuenta-form {
+  display: grid;
+
+  gap: 4px;
+}
+
+.field-error {
+  min-height: 18px;
+
+  margin-top: 6px;
+
+  color: #dc2626;
+
+  font-size: 0.85rem;
+}
+
+.cuenta-section-danger {
+  border: 1px solid #fecaca;
+}
+
+.cuenta-section-danger h3 {
+  color: #b91c1c;
+}
+
+.cuenta-warning {
+  margin-bottom: 18px;
+
+  color: #7f1d1d;
+}
+
+.btn-danger {
+  background-color: #dc2626;
+
+  color: #ffffff;
+}
+
+.btn-danger:hover {
+  background-color: #b91c1c;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 768px) {
+  .auth-container {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-page {
+    padding: 32px 16px;
+  }
+
+  .summary-grid,
+  .account-card {
+    grid-template-columns: 1fr;
+  }
+
+  .topbar {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .cuenta-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .cuenta-card-header {
+    flex-direction: column;
+  }
+}
