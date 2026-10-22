@@ -9,9 +9,17 @@ import { Movimiento } from "../models/Movimiento.js";
 import { STORAGE_KEYS, storageService } from "./StorageService.js";
 
 class BancoService {
+  /* =========================================
+       CONSTRUCTOR
+    ========================================= */
+
   constructor() {
     this._banco = null;
   }
+
+  /* =========================================
+       CARGA Y PERSISTENCIA DEL BANCO
+    ========================================= */
 
   cargarBanco() {
     const usuariosGuardados = storageService.obtener(STORAGE_KEYS.USUARIOS, []);
@@ -23,6 +31,8 @@ class BancoService {
       [],
     );
 
+    // Reconstruimos las instancias para
+    // recuperar también sus métodos.
     const usuarios = usuariosGuardados.map((usuario) => new Usuario(usuario));
 
     const cuentas = cuentasGuardadas.map((cuenta) => new Cuenta(cuenta));
@@ -66,6 +76,10 @@ class BancoService {
     return true;
   }
 
+  /* =========================================
+       CONSULTAS DEL USUARIO
+    ========================================= */
+
   obtenerDatosUsuario(usuarioId) {
     const banco = this.obtenerInstanciaBanco();
 
@@ -81,6 +95,8 @@ class BancoService {
       banco.obtenerMovimientosDeCuenta(cuenta.id),
     );
 
+    // Evitamos que un mismo movimiento
+    // sea incluido más de una vez.
     const movimientos = movimientosSinFiltrar.filter(
       (movimiento, index, array) =>
         index === array.findIndex((item) => item.id === movimiento.id),
@@ -111,6 +127,62 @@ class BancoService {
       totalMovimientos: movimientos.length,
     };
   }
+
+  /* =========================================
+       OPERACIONES BANCARIAS
+    ========================================= */
+
+  realizarDeposito({ cuentaId, monto, descripcion = "" }) {
+    const banco = this.obtenerInstanciaBanco();
+
+    const movimiento = banco.realizarDeposito({
+      cuentaId,
+      monto,
+      descripcion,
+    });
+
+    // Guardamos el nuevo saldo y
+    // el movimiento generado.
+    this.guardarBanco();
+
+    return movimiento;
+  }
+
+  realizarTransferencia({
+    cuentaOrigenId,
+    numeroCuentaDestino,
+    monto,
+    descripcion = "",
+  }) {
+    const banco = this.obtenerInstanciaBanco();
+
+    // Permitimos que el usuario escriba
+    // el número con o sin espacios.
+    const numeroDestino = String(numeroCuentaDestino).replace(/\s/g, "").trim();
+
+    const cuentaDestino = banco.buscarCuentaPorNumero(numeroDestino);
+
+    if (!cuentaDestino) {
+      throw new Error("La cuenta destino no existe.");
+    }
+
+    const resultado = banco.realizarTransferencia({
+      cuentaOrigenId,
+      cuentaDestinoId: cuentaDestino.id,
+      monto,
+      descripcion,
+    });
+
+    // Persistimos ambos saldos y los
+    // dos movimientos generados.
+    this.guardarBanco();
+
+    return resultado;
+  }
+
+  /* =========================================
+       ACTUALIZAR USUARIO
+    ========================================= */
 
   actualizarUsuario(usuarioId, { nombre, email, telefono }) {
     const usuarios = storageService.obtener(STORAGE_KEYS.USUARIOS, []);
@@ -150,6 +222,10 @@ class BancoService {
     return usuariosActualizados.find((item) => item.id === usuarioId) || null;
   }
 
+  /* =========================================
+       CAMBIO DE CONTRASEÑA
+    ========================================= */
+
   cambiarPassword(usuarioId, passwordActual, passwordNueva) {
     const usuarios = storageService.obtener(STORAGE_KEYS.USUARIOS, []);
 
@@ -186,6 +262,10 @@ class BancoService {
 
     return true;
   }
+
+  /* =========================================
+       ELIMINAR USUARIO
+    ========================================= */
 
   eliminarUsuario(usuarioId) {
     const usuarios = storageService.obtener(STORAGE_KEYS.USUARIOS, []);

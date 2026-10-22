@@ -2,7 +2,7 @@
 
 Proyecto integrador correspondiente al Módulo 4.
 
-El proyecto se desarrolla progresivamente utilizando JavaScript moderno, arquitectura modular, programación orientada a objetos y programación funcional.
+El sistema se desarrolla progresivamente utilizando JavaScript moderno, programación orientada a objetos, programación funcional, arquitectura modular y persistencia local.
 
 ## Tecnologías
 
@@ -10,26 +10,16 @@ El proyecto se desarrolla progresivamente utilizando JavaScript moderno, arquite
 - CSS3
 - JavaScript
 - ECMAScript Modules
-- Node.js
-- npm
 - LocalStorage
 - SweetAlert2
+- Node.js
+- npm
 - Git
 - GitHub
 
-## Arquitectura
-
-El proyecto utiliza las siguientes capas:
-
-- Models
-- Services
-- UI
-- Utils
-- Tests
-
 ## Arquitectura actual
 
-```powershell
+```text
 js/
 ├── main.js
 │
@@ -38,14 +28,16 @@ js/
 │   ├── Cuenta.js
 │   ├── Movimiento.js
 │   └── Usuario.js
-    
+│
 ├── services/
 │   ├── AuthService.js
+│   ├── BancoService.js
 │   └── StorageService.js
-    └── BancoService.js
 │
 ├── ui/
-│   └── DashboardUI.js
+│   ├── CuentaUI.js
+│   ├── DashboardUI.js
+│   └── TransferenciasUI.js
 │
 └── utils/
     ├── formatters.js
@@ -55,122 +47,97 @@ js/
 
 ## Páginas actuales
 
-### index.html
+- `index.html`
+- `dashboard.html`
+- `cuenta.html`
+- `transferencia.html`
 
-Contiene:
+## Operaciones bancarias
 
-- Formulario de inicio de sesión.
-- Formulario de registro.
-- Integración de SweetAlert2.
+### Depósitos
 
-### dashboard.html
+El sistema permite depositar dinero en una cuenta.
 
-Representa la primera página protegida del sistema.
+La operación:
 
-Actualmente permite:
+1. Valida el monto.
+2. Busca la cuenta.
+3. Actualiza el saldo.
+4. Genera un movimiento `DEPOSITO`.
+5. Guarda el saldo resultante.
+6. Persiste la operación.
 
-- Validar la existencia de una sesión.
-- Mostrar al usuario autenticado.
-- Cerrar sesión.
-- consume información bancaria
-- muestra saldo
-- muestra movimientos
-- muestra cuentas
+### Transferencias
 
-## Services
+El sistema permite transferir dinero entre cuentas.
 
-### StorageService
+La operación:
 
-Centraliza la comunicación con LocalStorage.
+1. Valida el monto.
+2. Localiza la cuenta origen.
+3. Localiza la cuenta destino.
+4. Comprueba que ambas cuentas estén activas.
+5. Evita transferencias a la misma cuenta.
+6. Comprueba saldo suficiente.
+7. Retira dinero de la cuenta origen.
+8. Deposita dinero en la cuenta destino.
+9. Genera `TRANSFERENCIA_ENVIADA`.
+10. Genera `TRANSFERENCIA_RECIBIDA`.
+11. Persiste las cuentas y movimientos.
 
-Métodos:
+## Tipos de movimientos actuales
 
-- `guardar()`
-- `obtener()`
-- `eliminar()`
-- `limpiar()`
-
-### AuthService
-
-Centraliza la autenticación y sesión.
-
-Métodos:
-
-- `login()`
-- `logout()`
-- `getCurrentUser()`
-- `protegerRuta()`
-
-## Claves de almacenamiento
-
-El sistema utiliza:
-
-- `STORAGE_KEYS.USUARIOS`
-- `STORAGE_KEYS.CUENTAS`
-- `STORAGE_KEYS.MOVIMIENTOS`
-- `STORAGE_KEYS.SESION`
-
-## Registro de usuarios
-
-Al registrar un usuario:
-
-1. Se validan los datos.
-2. Se comprueba que el correo no esté registrado.
-3. Se crea una instancia de `Usuario`.
-4. Se genera un número de cuenta.
-5. Se crea una instancia de `Cuenta`.
-6. Se relaciona la cuenta mediante `usuarioId`.
-7. Usuario y cuenta se guardan en LocalStorage.
-
-## Autenticación
-
-El inicio de sesión:
-
-1. Recupera los usuarios almacenados.
-2. Busca coincidencia de correo y contraseña.
-3. Crea una sesión.
-4. Guarda la sesión en LocalStorage.
-5. Redirige al dashboard.
+- `DEPOSITO`
+- `TRANSFERENCIA_ENVIADA`
+- `TRANSFERENCIA_RECIBIDA`
 
 ## SweetAlert2
 
-SweetAlert2 se utiliza para:
+En las transferencias se utiliza para:
 
-- Alertas de validación.
-- Registro exitoso.
-- Errores de autenticación.
-- Login exitoso.
-- Confirmación de cierre de sesión.
+- Validaciones.
+- Confirmación previa.
+- Saldo insuficiente.
+- Cuenta inexistente.
+- Transferencia a la misma cuenta.
+- Transferencia exitosa.
+- Depósito exitoso.
+- Errores de operación.
 
 ## Funcionalidades implementadas
 
-Actualmente el sistema permite:
+Actualmente la aplicación permite:
 
 - Registrar usuarios.
-- Crear una cuenta bancaria automáticamente.
-- Evitar correos duplicados.
-- Persistir usuarios y cuentas.
+- Crear cuentas bancarias.
 - Iniciar sesión.
-- Mantener la sesión después de recargar.
+- Mantener sesión.
 - Proteger páginas.
-- Mostrar al usuario autenticado.
-- Cerrar sesión.
-- Mostrar alertas con SweetAlert2.
+- Mostrar dashboard.
+- Consultar información bancaria.
+- Actualizar perfil.
+- Cambiar contraseña.
+- Eliminar usuario.
+- Realizar depósitos.
+- Realizar transferencias.
+- Actualizar saldos.
+- Registrar transferencias enviadas.
+- Registrar transferencias recibidas.
+- Persistir operaciones con LocalStorage.
 
-## Funcionalidades siguientes
+## Próxima versión
 
-Durante las siguientes versiones se desarrollarán:
+La siguiente versión implementará:
 
-- Dashboard bancario completo.
-- Consulta de saldo.
-- Información de cuenta.
-- Gestión del perfil.
-- Depósitos desde interfaz.
-- Transferencias.
-- Historial de movimientos.
-- Validaciones adicionales.
-- Pruebas automatizadas con Jest.
+- `movimientos.html`
+- Historial de operaciones.
+- Filtros.
+- Depósitos.
+- Transferencias enviadas.
+- Transferencias recibidas.
+- Ordenamiento por fecha.
+- Formato de importes y saldos.
 
 ## Versión actual
 
-v0.6.0 — Registro, autenticación, sesión y SweetAlert2.
+v0.9.0 — Operaciones bancarias y transferencias.
