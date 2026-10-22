@@ -1,37 +1,37 @@
-/* =========================================
-IMPORTAR UTILIDADES
-Importamos generarId() para asignar un identificador único a cada movimiento.
+/* ========================================= 
+			IMPORTAR UTILIDADES 
+Importamos generarId() para asignar un identificador Ãºnico a cada movimiento.
 ========================================= */
-import { generarId } from '../utils/helpers.js';
-/* =========================================
-MODELO MOVIMIENTO
-Representa una operación realizada dentro del sistema bancario.
-* Tipo de operación realizada
-* Cantidad involucrada en la operación
-* Descripción opcional del movimiento.
-* Cuenta desde la cual se origina la operación.
+import { generarId } from "../utils/helpers.js";
+
+/* ========================================= 
+			MODELO MOVIMIENTO
+    Con esta clase se representa una operaciÃ³n bancaria realizada dentro del sistema.
+    Cada instancia de movimiento contiene informacion sobre una operacion
 ========================================= */
 export class Movimiento {
-constructor({
-id = generarId(),
-tipo,
-monto,
-descripcion = '',
-cuentaOrigen = null,
-cuentaDestino = null,
-saldoResultante = null,
-fecha = new Date().toISOString(),
-}) {
-/* =================================
-ASIGNAR PROPIEDADES
-================================= */
-this.id = id;
-this.tipo = tipo;
-this.monto = Number(monto);
-this.descripcion = descripcion;
-this.cuentaOrigen = cuentaOrigen;
-this.cuentaDestino = cuentaDestino;
-this.saldoResultante = saldoResultante;
-this.fecha = fecha;
-}
+  //inicializa una instancia de la clase movimiento.
+  constructor({
+    id = generarId(),
+    tipo,
+    monto,
+    descripcion = "",
+    cuentaOrigen = null,
+    cuentaDestino = null,
+    saldoResultante = null,
+    fecha = new Date().toISOString(),
+  }) {
+    /* ================================= 
+				ASIGNAR PROPIEDADES
+        Recibe las informaciÃ³n de recibida para almacenarla como propiedades del objeto
+		================================= */
+    this.id = id;
+    this.tipo = tipo;
+    this.monto = Number(monto);
+    this.descripcion = descripcion;
+    this.cuentaOrigen = cuentaOrigen;
+    this.cuentaDestino = cuentaDestino;
+    this.saldoResultante = saldoResultante;
+    this.fecha = fecha;
+  }
 }

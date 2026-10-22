@@ -9,12 +9,10 @@ import { Movimiento } from "./Movimiento.js";
 
 /* =========================================
    MODELO BANCO
+   Coordina los usuarios, cuentas y movimientos 
+   y concentra las reglas del dominio bancario.
 ========================================= */
 
-/*
-    Coordina los usuarios, cuentas y movimientos
-    y concentra las reglas del dominio bancario.
-*/
 export class Banco {
   constructor({
     // Usuarios registrados
@@ -33,6 +31,11 @@ export class Banco {
        AGREGAR USUARIO
     ===================================== */
 
+  /* some() recorre el arreglo de usuarios y comprueba si al menos un elemento
+    cumple la condición indicada u representa cada usuario existente.
+     
+    u.id === usuario.id:
+    Compara el identificador del usuariO existente con el del nuevo usuario.*/
   agregarUsuario(usuario) {
     const existe = this.usuarios.some((u) => u.id === usuario.id);
 
@@ -104,6 +107,7 @@ export class Banco {
 
   /* =====================================
        OBTENER CUENTAS DE UN USUARIO
+       Utiliza filter() para seleccionar las cuentas cuyo usuarioId coincida.
     ===================================== */
 
   // filter() devuelve todas las cuentas cuyo usuarioId corresponda al usuario
@@ -124,13 +128,15 @@ export class Banco {
        REALIZAR DEPÓSITO
     ===================================== */
   realizarDeposito({ cuentaId, monto, descripcion = "" }) {
-    /* =================================
-           CONVERTIR MONTO
-        ================================= */
+    //Convertir monto a numero
     const montoNumerico = Number(monto);
 
     /* =================================
            VALIDAR MONTO
+        Number.isFinite() comprueba que el monto sea un número finito.
+        MontoNumerico <= 0 comprueba si el monto es cero o negativo.
+        El operador || significa OR.
+        Si cualquiera de las condiciones se cumple, el monto es rechazado.
         ================================= */
     if (!Number.isFinite(montoNumerico) || montoNumerico <= 0) {
       throw new Error("Monto inválido, el monto debe ser mayor a cero.");
