@@ -38,10 +38,11 @@ js/
 │   ├── Cuenta.js
 │   ├── Movimiento.js
 │   └── Usuario.js
-│
+    
 ├── services/
 │   ├── AuthService.js
 │   └── StorageService.js
+    └── BancoService.js
 │
 ├── ui/
 │   └── DashboardUI.js
@@ -71,6 +72,10 @@ Actualmente permite:
 - Validar la existencia de una sesión.
 - Mostrar al usuario autenticado.
 - Cerrar sesión.
+- consume información bancaria
+- muestra saldo
+- muestra movimientos
+- muestra cuentas
 
 ## Services
 
